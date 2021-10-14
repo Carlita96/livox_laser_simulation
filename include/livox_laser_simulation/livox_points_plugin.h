@@ -103,6 +103,7 @@ class LivoxPointsPlugin : public RayPlugin {
     transport::NodePtr node;
     gazebo::sensors::SensorPtr raySensor;
     std::vector<AviaRotateInfo> aviaInfos;
+    std::string frame_id_ = "livox";
 
     std::shared_ptr<ros::NodeHandle> rosNode;
     ros::Publisher rosPointPub;

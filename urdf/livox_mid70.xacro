@@ -12,7 +12,13 @@
   <xacro:property name="csv_file_name" value="package://livox_laser_simulation/scan_mode/mid70.csv"/>
   
   <xacro:include filename="$(find livox_laser_simulation)/urdf/livox_gazebo_sensor.xacro"/>
-  <xacro:macro name="Livox_Mid70" params="visualize:=True name:=livox publish_pointcloud_type:=0">
+  <xacro:macro name="Livox_Mid70" params="*origin visualize:=True name:=livox topic:=pointcloud parent:=base_link publish_pointcloud_type:=1">
+		<joint name="${name}_base_mount_joint" type="fixed">
+			<xacro:insert_block name="origin" />
+			<parent link="${parent}" />
+			<child link="${name}_base" />
+		</joint>
+
     <link name="${name}_base">
       <xacro:null_inertial/>
       <visual> 
@@ -24,7 +30,7 @@
       </visual>
 
       <collision>
-          <origin xyz="0 0 0" rpy="0 0 0" />
+          <origin xyz="0.0 0 0.0" rpy="0 0 0" />
           <geometry>
           <mesh filename="package://livox_laser_simulation/meshes/livox_mid40.dae">
           </mesh>
@@ -40,6 +46,6 @@
       <child link="${name}"/>
       <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
     </joint>
-    <xacro:Livox_gazebo_sensor name="${name}" visualize="${visualize}" publish_pointcloud_type="${publish_pointcloud_type}"/>
+    <xacro:Livox_gazebo_sensor name="${name}" visualize="${visualize}" frame_id="${name}" topic="${topic}" publish_pointcloud_type="${publish_pointcloud_type}"/>
   </xacro:macro>
 </robot>

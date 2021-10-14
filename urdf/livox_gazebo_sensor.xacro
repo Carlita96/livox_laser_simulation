@@ -8,9 +8,9 @@
           izz="0.001"/>
     </inertial>
   </xacro:macro>
-  <xacro:macro name="Livox_gazebo_sensor" params="visualize:=True update_rate:=10 resolution:=0.002 noise_mean:=0.0 noise_stddev:=0.01 name:=livox publish_pointcloud_type:=1">
+  <xacro:macro name="Livox_gazebo_sensor" params="visualize:=True update_rate:=10 resolution:=0.002 frame_id:=livox noise_mean:=0.0 noise_stddev:=0.01 name:=livox topic:=pointcloud publish_pointcloud_type:=1">
     <gazebo reference="${name}">
-      <sensor type="ray" name="livox_lidar">
+      <sensor type="ray" name="${name}">
         <pose>0 0 0 0 0 0</pose>
         <visualize>True</visualize>
         <update_rate>${update_rate}</update_rate>
@@ -42,30 +42,13 @@
             </noise>
           </ray>
           <visualize>${visualize}</visualize>
+          <frame_id>${frame_id}</frame_id>
           <samples>${samples}</samples>
           <downsample>${downsample}</downsample>
           <csv_file_name>${csv_file_name}</csv_file_name>
           <publish_pointcloud_type>${publish_pointcloud_type}</publish_pointcloud_type>
-          <ros_topic>${ros_topic}</ros_topic>
+          <ros_topic>${topic}</ros_topic>
         </plugin>
-      </sensor>
-      <sensor name="livox_imu" type="imu">
-        <always_on>true</always_on>
-        <update_rate>50</update_rate>
-        <visualize>false</visualize>
-        <topic>"/livox/imu"</topic>
-        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-          <topicName>/livox/imu</topicName>
-          <bodyName>imu_link</bodyName>
-          <updateRateHZ>10.0</updateRateHZ>
-          <xyzOffset>0 0 0</xyzOffset>
-          <!-- <gaussianNoise>0.0026399240948208127</gaussianNoise> -->
-          <gaussianNoise>0.00</gaussianNoise>
-          <rpyOffset>0 0 0</rpyOffset>
-          <frameName>imu_link</frameName>
-          <initialOrientationAsReference>false</initialOrientationAsReference>
-        </plugin>
-        <pose>0 0 0 0 0 0</pose>
       </sensor>
     </gazebo>
   </xacro:macro>
