@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- Initialize params -->
+	<arg name="use_sim_time" value="true" />
+	<param name="/use_sim_time" value="$(arg use_sim_time)" />
+	<arg name="physics" default="ode" />
+	<arg name="paused" default="false" />
+	<arg name="gui" default="true" />
+	<arg name="headless" default="false" />
+	<arg name="debug" default="false" />
+	<arg name="verbose" default="true" />
+	<arg name="belt_loader_model" default="mulag" />
+	<arg name="world_name" default="$(find livox_laser_simulation)/worlds/target_test.world" />
+
+	<!-- Log Level -->
+	<env name="ROSCONSOLE_CONFIG_FILE"
+		value="$(find livox_laser_simulation)/config/rosconsole.config"/>
+
+	<!-- CONFIG -->
+	<rosparam command="load" file="$(find livox_laser_simulation)/config/target_test_config.yaml" />
+
+	<!-- GAZEBO -->
+	<!-- Start gazebo and load the world -->
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="physics" default="$(arg physics)" />
+		<arg name="paused" value="$(arg paused)" />
+		<arg name="use_sim_time" value="$(arg use_sim_time)" />
+		<arg name="gui" value="$(arg gui)" />
+		<arg name="headless" value="$(arg headless)" />
+		<arg name="debug" value="$(arg debug)" />
+		<arg name="verbose" value="$(arg verbose)" />
+		<arg name="world_name" value="$(arg world_name)" />
+	</include>
+
+	<!-- Spawn the example robot -->
+	<param name="robot_description" command="$(find xacro)/xacro '$(find livox_laser_simulation)/urdf/target_test/target_test.urdf.xacro'" />
+	<node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -param /robot_description -model target_test" />
+
+	<!-- Dynamic Reconfigure -->
+	<node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" />
+	
+	<!-- State Publisher -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+		<param name="publish_frequency" type="double" value="50.0" />
+	</node>
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+	<!-- RVIZ -->
+	<arg name="rviz" default="true" />
+	<node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="true" output="screen" args="-d $(find livox_laser_simulation)/rviz/target_sensor.rviz" />
+</launch>
