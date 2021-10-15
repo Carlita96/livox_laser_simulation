@@ -1,0 +1,20 @@
+ground_truth:
+  topic_lidar_1: "/lidar_1"
+  topic_lidar_2: "/lidar_2"
+
+  pose_lidar_2_from_lidar_1:
+    x_pos: 1.0
+    y_pos: 1.0
+    z_pos: 1.0
+    roll: 0
+    pitch: 0
+    yaw: 0
+
+  pose_lidar_1_from_base_link:
+    x_pos: 0.5
+    y_pos: 0
+    z_pos: 0.5
+    roll: 0
+    pitch: 0
+    yaw: 0
+  

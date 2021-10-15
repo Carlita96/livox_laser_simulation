@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <model name="spherical_target">
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+          <sphere>
+            <radius>0.25 0.25</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <cast_shadows>false</cast_shadows>
+	       <geometry>
+          <sphere>
+            <radius>0.25 0.25</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://calibrate_lidars/urdf/calibration_target/mesh/wood.material</uri>
+            <uri>model://calibrate_lidars/urdf/calibration_target/mesh</uri>
+            <name>vrc/wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

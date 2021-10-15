@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name="calibration_target">
+			<static>true</static>
+			<link name="calibration_target">
+				<visual name="visual">
+					<pose>0 0 0 0 0 0</pose>
+					<geometry>
+						<mesh>
+							<uri>model://calibrate_lidars/urdf/calibration_target/mesh/calibration_target.stl</uri>
+						</mesh>
+					</geometry>
+					<material>
+						<script>
+							<uri>model://calibrate_lidars/urdf/calibration_target/mesh/wood.material</uri>
+							<uri>model://calibrate_lidars/urdf/calibration_target/mesh</uri>
+							<name>vrc/wood</name>
+						</script>
+					</material>
+				</visual>
+				<collision name="fuselage_collision">
+					<pose>0 0 0 0 0 0</pose>
+					<geometry>
+						<mesh>
+							<uri>model://calibrate_lidars/urdf/calibration_target/mesh/calibration_target.stl</uri>
+						</mesh>
+					</geometry>
+				</collision>
+			</link>
+		</model>
+</sdf>
